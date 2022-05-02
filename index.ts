@@ -7,5 +7,5 @@ from(['alice','ben','charlie','from']).subscribe({
   error: (error) => {
     console.log('had an error');
     console.log(error.message);
-  },
+  }
 }); 
