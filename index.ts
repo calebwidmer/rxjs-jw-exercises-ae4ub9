@@ -27,6 +27,7 @@ const b$  = new Observable(subscriber =>{
 },1120);
 setTimeout(()=> {
   subscriber.next('B-2');
+  //subscriber.complete();
 },1850);
 setTimeout(()=> {
   subscriber.next('B-3');
