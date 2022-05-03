@@ -41,6 +41,6 @@ return () => {
 });
 
  combineLatest([a$,b$]).subscribe({
-   next: v=> console.log(v),
+   next: ([Ah,Be])=> console.log(Be,Ah),
    error: err=> console.log('error:', err)
  });
