@@ -12,7 +12,7 @@ const a$  = new Observable(subscriber =>{
 const b$  = new Observable(subscriber =>{
 
   setTimeout(()=> {
-  subscriber.error('Failure');
+  subscriber.error('Failure, sub never finished so forkjoin sub never gets invoked');
   subscriber.complete()
 },5000);
 });
