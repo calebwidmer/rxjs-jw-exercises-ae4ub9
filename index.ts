@@ -1,11 +1,24 @@
-import { from } from 'rxjs';
+import { forkJoin, from, Observable, Subscriber } from 'rxjs';
 
- 
-from(['alice','ben','charlie','from']).subscribe({
-  next: (value) => console.log(value),
-  complete: () => console.log('completed'),
-  error: (error) => {
-    console.log('had an error');
-    console.log(error.message);
-  }
-}); 
+const a$  = new Observable(subscriber =>{
+
+  setTimeout(()=> {
+  subscriber.next('A');
+  subscriber.complete()
+},3000);
+});
+
+
+const b$  = new Observable(subscriber =>{
+
+  setTimeout(()=> {
+  subscriber.error('Failure');
+  subscriber.complete()
+},5000);
+});
+
+
+ forkJoin([a$,b$]).subscribe({
+   next: v=> console.log(v),
+   error: err=> console.log('error:',err)
+ });
