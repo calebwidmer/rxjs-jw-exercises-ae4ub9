@@ -1,13 +1,19 @@
-import { forkJoin, from, Observable, Subscriber } from 'rxjs';
+import { combineLatest, forkJoin, from, Observable, Subscriber } from 'rxjs';
 
 const a$  = new Observable(subscriber =>{
 
   setTimeout(()=> {
     subscriber.next('A-1');
-    subscriber.next('A-2');
-    subscriber.next('A-3');
-  subscriber.complete()
-},1000);
+},1020);
+setTimeout(()=> {
+  subscriber.next('A-2');
+},1800);
+setTimeout(()=> {
+  subscriber.next('A-3');
+  subscriber.complete();
+},1900);
+
+
 
 return () => {
   console.log(' A  teardown');
@@ -17,17 +23,23 @@ return () => {
 const b$  = new Observable(subscriber =>{
 
   setTimeout(()=> {
-  subscriber.next('B-1');
+    subscriber.next('B-1');
+},1120);
+setTimeout(()=> {
   subscriber.next('B-2');
-  subscriber.complete()
-},3000);
+},1850);
+setTimeout(()=> {
+  subscriber.next('B-3');
+  subscriber.complete();
+},1990);
+
 
 return () => {
   console.log(' B  teardown');
 }
 });
 
- forkJoin([a$,b$]).subscribe({
+ combineLatest([a$,b$]).subscribe({
    next: v=> console.log(v),
    error: err=> console.log('error:', err)
  });
