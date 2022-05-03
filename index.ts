@@ -6,6 +6,10 @@ const a$  = new Observable(subscriber =>{
   subscriber.next('A');
   subscriber.complete()
 },3000);
+
+return () => {
+  console.log(' A  teardown');
+}
 });
 
 
@@ -15,10 +19,14 @@ const b$  = new Observable(subscriber =>{
   subscriber.error('Failure, sub never finished so forkjoin sub never gets invoked');
   subscriber.complete()
 },5000);
+
+return () => {
+  console.log(' B teardown');
+}
 });
 
 
  forkJoin([a$,b$]).subscribe({
    next: v=> console.log(v),
-   error: err=> console.log('error:',err)
+   error: err=> console.log('error:', err)
  });
